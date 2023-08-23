@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7749</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /*background-image: url('../static/images/bg.jpg');*/
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative; /* 添加相对定位以容纳按钮 */
+
+        }
+
+        .audio-button {
+            position: absolute; /* 绝对定位，位于右上角 */
+            top: 20px; /* 距离顶部的距离 */
+            right: 20px; /* 距离右侧的距离 */
+            background: transparent; /* 透明背景 */
+            border: none;
+            cursor: pointer;
+            z-index: 1; /* 放在最前面 */
+        }
+        .audio-button img {
+            width: 30px; /* 图片宽度 */
+            height: 30px; /* 图片高度 */
+            transition: transform 0.3s ease; /* 添加旋转过渡效果 */
+        }
+        .audio-button.playing img {
+            animation: rotate 2s linear infinite; /* 播放时旋转动画 */
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        audio {
+            display: none; /* 隐藏音频播放器 */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff6b6b;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            overflow: hidden; /* 隐藏溢出部分 */
+            white-space: nowrap; /* 防止文字换行 */
+            background: linear-gradient(45deg, #ff6b6b, #ffb6c1); /* 渐变背景色 */
+            -webkit-background-clip: text; /* 文字颜色适应渐变 */
+            color: transparent; /* 隐藏实际文字颜色 */
+            display: inline-block; /* 内联块元素，以适应渐变颜色 */
+            padding: 5px 10px; /* 添加内边距以提高可读性 */
+            border-radius: 10px; /* 圆角 */
+        }
+        .heart {
+            background: linear-gradient(45deg, #ff6b6b, #ffb6c1); /* 心形渐变背景色 */
+            -webkit-background-clip: text; /* 文字颜色适应渐变 */
+            color: transparent; /* 隐藏实际文字颜色 */
+        }
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* 将视频放在最底层 */
+        }
+    </style>
+</head>
+<body>
+
+    <video id="video-background" autoplay muted loop>
+        <source src="../static/audio/bg2.mp4" type="video/mp4">
+    </video>
+    <audio id="audio" loop>
+        <source src="../static/audio/恶作剧.flac" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1>七夕乐乐</h1>
+        <p id="textToAppear1" style="display: none;">亲爱的，我想对你说：<span class="heart">❤️</span></p>
+        <p id="textToAppear2" style="display: none;">在这特别的日子里，我想借着七夕的浪漫，表达我对你的感情。</p>
+        <p id="textToAppear3" style="display: none;">你是我生命中最重要的人，我愿意陪伴你走过每一个美好的时刻。</p>
+        <p id="textToAppear4" style="display: none;">愿这份心意伴随着星光，穿越千山万水，传达到你的心底。</p>
+        <p id="textToAppear5" style="display: none;">他的生日：{{ boy_birthday }}</p>
+        <p id="textToAppear6" style="display: none;">她的生日：{{ girl_birthday }}</p>
+        <p id="textToAppear7" style="display: none;">纪念日：{{ anniversary }}</p>
+        <p id="textToAppear8" style="display: none;">在一起：{{ anniversary_days }} 天</p>
+        <p id="textToAppear9" style="display: none;">他在{{boy_area}}</p>
+        <p id="textToAppear10" style="display: none;">她在{{girl_area}}</p>
+    </div>
+    <button class="audio-button" id="audioButton">
+        <img src="../static/images/button1.jpg" alt="爱心图片">
+    </button>
+    <button onclick="window.location.href='{{ url_for('home') }}'">照片墙</button>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const audioButton = document.getElementById('audioButton');
+        const paragraphs = document.querySelectorAll(".container p");
+        let currentIndex = 0;
+
+        audioButton.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                audioButton.classList.add('playing');
+                audio.addEventListener('play', () => {
+                    displayNextParagraph();
+                });
+            } else {
+                audio.pause();
+                audioButton.classList.remove('playing');
+            }
+        });
+
+        function displayNextParagraph() {
+            if (currentIndex < paragraphs.length) {
+                paragraphs[currentIndex].style.display = "block";
+                currentIndex++;
+                setTimeout(displayNextParagraph, 1000); // 每个段落显示的间隔时间（毫秒）
+            }
+        }
+    </script>
+</body>
+</html>

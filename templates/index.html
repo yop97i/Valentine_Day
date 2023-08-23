@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七七</title>
+    <style>
+
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden; /* 隐藏默认滚动条 */
+            /*font-family: 'Arial', sans-serif;*/
+            background-color: #f7f7f7;
+            /*text-align: center;*/
+            background-image: url('../static/images/bg2.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* 将视频放在最底层 */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        /* 将表单部分的背景设置为透明 */
+        .container form {
+            background: transparent;
+        }
+        h1 {
+            color: #ff6b6b;
+            margin-top: 0;
+        }
+        p {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        input[type="date"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            /*background-color: #ff4f4f;*/
+            background-image: image-set('../static/images/button1.png' 1x, '../static/images/button2.jpg；' 2x);
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay muted loop>
+        <source src="../static/audio/bg1.mp4" type="video/mp4">
+        <!-- 如果需要支持其他格式的视频，可以添加更多的<source>标签 -->
+    </video>
+    <div class="container">
+        <h1>七夕乐乐</h1>
+        <form action="/" method="post">
+            <label for="boy_birthday">他的生日：</label>
+            <input type="date" id="boy_birthday" name="boy_birthday" required>
+            <label for="girl_birthday">她的生日：</label>
+            <input type="date" id="girl_birthday" name="girl_birthday" required>
+            <label for="boy_area">他的城市</label>
+            <input type="text" id="boy_area" name="boy_area" required>
+            <label for="girl_area">她的城市</label>
+            <input type="text" id="girl_area" name="girl_area" required>
+            <label for="anniversary">在一起的纪念日：</label>
+            <input type="date" id="anniversary" name="anniversary" required>
+            <button type="submit">填好啦</button>
+        </form>
+    </div>
+</body>
+</html>

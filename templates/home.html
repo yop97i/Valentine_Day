@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片墙</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .photo {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: all 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-container" id="photo-container">
+    </div>
+
+    <script>
+        const photoContainer = document.getElementById('photo-container');
+
+        // 你的照片URL数组
+        const photoUrls = [
+            '../static/images/photo1.jpg',
+            '../static/images/photo2.jpg',
+            '../static/images/photo3.png',
+            '../static/images/photo4.png',
+            '../static/images/photo5.png',
+            '../static/images/photo7.png',
+            '../static/images/photo8.png',
+            '../static/images/photo9.jpg',
+            '../static/images/photo10.jpg',
+            '../static/images/photo1.pen'
+        ];
+
+        // 创建照片元素并添加到页面中
+        photoUrls.forEach((url, index) => {
+            const photo = document.createElement('div');
+            photo.className = 'photo';
+            photo.style.backgroundImage = `url(${url})`;
+            photoContainer.appendChild(photo);
+            animatePhoto(photo, index);
+        });
+
+        // 动画函数，使照片飞入并排列成爱心形状
+        function animatePhoto(photo, index) {
+            const angle = (index / photoUrls.length) * Math.PI * 2;
+            const radius = 200;
+            const centerX = photoContainer.clientWidth / 2;
+            const centerY = photoContainer.clientHeight / 2;
+
+            const targetX = centerX + radius * Math.cos(angle);
+            const targetY = centerY + radius * Math.sin(angle);
+
+            // 设置初始位置在屏幕外
+            photo.style.transform = `translate(${centerX}px, ${centerY - 200}px)`;
+
+            // 使用requestAnimationFrame来实现动画
+            const startTime = performance.now();
+            function movePhoto(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                if (elapsedTime < 200 * index) {
+                    requestAnimationFrame(movePhoto);
+                } else {
+                    photo.style.transform = `translate(${targetX}px, ${targetY}px)`;
+                }
+            }
+            requestAnimationFrame(movePhoto);
+        }
+    </script>
+</body>
+</html>
+
